@@ -18,6 +18,7 @@ import 'froala-editor/js/plugins/print.min.js'
 import 'froala-editor/js/plugins/colors.min.js'
 import 'froala-editor/js/plugins/table.min.js'
 import 'froala-editor/js/plugins/code_view.min.js'
+import 'froala-editor/js/plugins/emoticons.min.js'
 
 const Editor =()=>{
   
@@ -29,7 +30,7 @@ const Editor =()=>{
         // documentReady: true,
         htmlAllowedTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
         imageUpload: true,
-        colorsText: ['#61BD6D', '#1ABC9C', '#54ACD2', 'REMOVE'],
+        // colorsText: ['#61BD6D', '#1ABC9C', '#54ACD2', 'REMOVE'],
         tableCellMultipleStyles: true,
        
       }

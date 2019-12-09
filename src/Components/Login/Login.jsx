@@ -1,9 +1,26 @@
-import React from 'react'
-
+import React,{useState} from 'react'
+import { auth } from 'firebase';
 
 const Login =()=>{
 
+  
+    const [email,setEmail]=useState('')
+    const [pass,setPass]=useState('')
+    const [error,seterror]=useState(null)
+    const sesion=(e)=>{
 
+      e.preventDefault()
+      
+        auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+        seterror(errorMessage)
+      });
+
+    }
+    
   return (
     <div class="limiter">
     <div class="container-login100">
@@ -18,7 +35,7 @@ const Login =()=>{
                 </span>
 
                 <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                    <input class="input100" type="text" name="email" placeholder="Email"/>
+                    <input value={email} onChange={(e)=>setEmail(e.target.value)} class="input100" type="text" name="email" placeholder="Email"/>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -26,7 +43,7 @@ const Login =()=>{
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                    <input class="input100" type="password" name="pass" placeholder="Password"/>
+                    <input value={pass} onChange={(e)=>setPass(e.target.value)}  class="input100" type="password" name="pass" placeholder="Password"/>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-lock" aria-hidden="true"></i>
@@ -34,7 +51,7 @@ const Login =()=>{
                 </div>
                 
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn">
+                    <button class="login100-form-btn" onClick={sesion} type="submit">
                         Login
                     </button>
                 </div>
