@@ -1,7 +1,7 @@
 import React,{useEffect,useState,Fragment} from 'react'
 import './style.css'
 
-import { auth, signOut } from '../firebase'
+import { auth, signOut, firestore } from '../firebase'
 import Folder from './Folder&File/Folder'
 import File from './Folder&File/File'
 import Nav from './Barra'
@@ -10,13 +10,27 @@ import Login from './Login/Login'
 
 const Side =({user})=>{
 
-   const [cal,setcal]=useState(false)
-   console.log(user)
-    
+   const [folder,setFolder]=useState(null)
+   const [file,setFile]=useState(null)
+   console.log(folder)
+   console.log(file) 
    useEffect(()=>{
-     console.log(auth)
+    
+   
+     if (user){
+        firestore.collection("desktop").doc(user&&user.uid).collection("folders").onSnapshot(el=>{
+         setFolder(el.docs)
+        
+      })
+      firestore.collection("desktop").doc(user&&user.uid).collection("files").onSnapshot(el=>{
+        setFile(el.docs)
+       
+     })
+     }
+    
      
-   })
+    
+   },[user])
 
     return (
       <Fragment>
@@ -98,7 +112,7 @@ const Side =({user})=>{
                  </li>
                 
                  <li>
-                   <a  onClick={()=>setcal(true)}>
+                   <a >
                      <i class="fa fa-calendar"></i>
                      <span>Calendar</span>
                    </a>
@@ -134,6 +148,7 @@ const Side =({user})=>{
               </button>
               <div class="dropdown-menu">
                <button onClick={signOut}>Cerrar Sesion</button>
+               
               </div>
              </a>
            </div>
@@ -141,11 +156,19 @@ const Side =({user})=>{
          
          <main class="page-content">
            
-          <Folder></Folder>
-          <File></File>
+          {folder && folder.map(el=>{
+             
+             return <Folder name={el.data().name} id={el.data().id } author={el.data().author}></Folder>
+          })}
+          {
+            file && file.map(el=>{
+             
+              return <File name={el.data().name} id={el.data().id } author={el.data().author}></File>
+           })
+          }
        
          </main>
-       <Nav></Nav>
+       <Nav user={user}></Nav>
        </div>
         :<Login></Login> 
        }

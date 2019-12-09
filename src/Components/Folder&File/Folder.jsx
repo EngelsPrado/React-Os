@@ -1,16 +1,26 @@
-import React from 'react'
+import React,{useState} from 'react'
 import interact from 'interactjs'
 import './style.css'
-const Folder =()=>{
+import { firestore } from '../../firebase'
+import * as firebase from 'firebase';
+import {Redirect} from '@reach/router'
+const Folder =({name,id,author})=>{
 
+  const [redir,setredir]=useState(false)
 
+  const eliminar=(id)=>{
+  
+       firestore.collection("desktop").doc(author).collection("folders").doc(id).delete()
+  }
+
+ console.log(name)
     
 // enable draggables to be dropped into this
 interact('.dropzone').dropzone({
     // only accept elements matching this CSS selector
     accept: '#yes-drop',
     // Require a 75% element overlap for a drop to be possible
-    overlap: 0.70,
+    overlap: 0.75,
   
     // listen for drop related events:
   
@@ -26,18 +36,24 @@ interact('.dropzone').dropzone({
       dropzoneElement.classList.add('drop-target')
       draggableElement.classList.add('can-drop')
     //   draggableElement.textContent = 'Dragged in'
-    console.log('entro')
+  
+   
     },
     ondragleave: function (event) {
       // remove the drop feedback style
       event.target.classList.remove('drop-target')
       event.relatedTarget.classList.remove('can-drop')
     //   event.relatedTarget.textContent = 'Dragged out'
-    console.log('salio')
+  
     },
     ondrop: function (event) {
     //   event.relatedTarget.textContent = 'Dropped'
-     console.log('realizar accion')
+     var el=document.getElementById("yes-drop")
+     console.log(el.dataset.id)
+     firestore.collection("desktop").doc(author).collection("folders").doc(id).update({
+       files:firebase.firestore.FieldValue.arrayUnion(el.dataset.id)
+     }) 
+     firestore.collection("desktop").doc(author).collection("files").doc(el.dataset.id).delete()
     },
     ondropdeactivate: function (event) {
       // remove active dropzone feedback
@@ -78,16 +94,10 @@ interact('.dropzone').dropzone({
     // call this function on every dragmove event
     onmove: dragMoveListener,
     // call this function on every dragend event
-    onend: function (event) {
-      var textEl = event.target.querySelector('p')
-
-      textEl && (textEl.textContent =
-        'moved a distance of ' +
-        (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
-                   Math.pow(event.pageY - event.y0, 2) | 0))
-          .toFixed(2) + 'px')
-    }
+    
   })
+
+  
 
 function dragMoveListener (event) {
   var target = event.target
@@ -103,20 +113,40 @@ function dragMoveListener (event) {
   // update the posiion attributes
   target.setAttribute('data-x', x)
   target.setAttribute('data-y', y)
+ 
 }
-
-// this is used later in the resizing and gesture demos
+ 
 window.dragMoveListener = dragMoveListener
+// this is used later in the resizing and gesture demos
+
+   if(redir)
+     return <Redirect to="/folder"></Redirect>
+
 
     return (
-        <div id="outer-dropzone" class="dropzone draggable d-flex row justify-content-center">
+        <div onDoubleClick={()=>setredir(true)} id="outer-dropzone" class="dropzone draggable d-flex row justify-content-center">
+           <div class="dropdown">
+                                    <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                        
+                                        <button class="dropdown-item" onClick={()=>{eliminar(id)}}>Eliminar</button>
+                                        <button class="dropdown-item" onClick={()=>{eliminar(id)}}>Cambiar nombre</button>
+                                        
+                                    </div>
+                                </div>
                 <img  src="https://img.icons8.com/cute-clipart/64/000000/folder-invoices.png"/>
-                 <span>Folder</span>
+                <span>{name}</span>
     
         </div>
     )
       
 
 }
+
+Folder.defaultProps = {
+  name: 'nueva carpeta'
+};
 
 export default Folder

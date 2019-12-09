@@ -1,9 +1,36 @@
 import React from 'react'
 import './style.css'
+import NewFolder from '../Util/NewFolder'
+import { firestore } from '../../firebase'
+const uuidv4 = require('uuid/v4');
 
+const Nav =({user})=>{
 
-const Nav =()=>{
+   const newFolder=()=>{
+      var id=uuidv4()
+  
+     firestore.collection("desktop").doc(user.uid).collection("folders").doc(id).set({
+       name:'nueva carpeta',
+       author:user.uid,
+       type:'folder',
+       id,
+       date:Math.round((new Date()).getTime() / 1000)
+     })
 
+   }
+
+   const newFile=()=>{
+    var id=uuidv4()
+
+   firestore.collection("desktop").doc(user.uid).collection("files").doc(id).set({
+     name:'new file',
+     author:user.uid,
+     type:'file',
+     id,
+     date:Math.round((new Date()).getTime() / 1000)
+   })
+
+ }
 
     return (
         <nav class="navbar  fixed-bottom navbar-expand-lg navbar-dark bg-dark">
@@ -27,8 +54,11 @@ const Nav =()=>{
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Copiar</a>
           <a class="dropdown-item" href="#">Cortar</a>
-          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Pegar</a>
+          <div class="dropdown-divider"></div>
+          <button onClick={newFolder} class="dropdown-item">Nueva Carpeta</button>
+         
+          <button   onClick={newFile}  class="dropdown-item" >Nuevo archivo</button>
         </div>
       </li>
       
