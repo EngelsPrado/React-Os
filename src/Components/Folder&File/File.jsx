@@ -1,6 +1,6 @@
 import React from 'react'
 import { firestore } from '../../firebase'
-
+import { navigate } from "@reach/router"
 
 
 const File = ({name,id,author})=>{
@@ -13,7 +13,7 @@ const File = ({name,id,author})=>{
 
 
     return (
-        <div id="yes-drop" data-id={`${id&&id}`} onClick={(e)=>console.log('moviendo')} class="drag-drop d-flex row justify-content-center">
+        <div id="yes-drop" data-id={`${id&&id}`} data-name={`${name&&name}`} onDoubleClick={(e)=>navigate(`/file/${id}`)} class="drag-drop d-flex row justify-content-center">
             <div class="dropdown">
                                     <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-ellipsis-h"></i>

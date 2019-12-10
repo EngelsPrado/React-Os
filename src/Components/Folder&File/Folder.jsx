@@ -3,10 +3,11 @@ import interact from 'interactjs'
 import './style.css'
 import { firestore } from '../../firebase'
 import * as firebase from 'firebase';
-import {Redirect} from '@reach/router'
+import { navigate } from "@reach/router"
+
 const Folder =({name,id,author})=>{
 
-  const [redir,setredir]=useState(false)
+
 
   const eliminar=(id)=>{
   
@@ -51,9 +52,11 @@ interact('.dropzone').dropzone({
      var el=document.getElementById("yes-drop")
      console.log(el.dataset.id)
      firestore.collection("desktop").doc(author).collection("folders").doc(id).update({
-       files:firebase.firestore.FieldValue.arrayUnion(el.dataset.id)
+       files:firebase.firestore.FieldValue.arrayUnion({id:el.dataset.id,name:el.dataset.name})
      }) 
-     firestore.collection("desktop").doc(author).collection("files").doc(el.dataset.id).delete()
+     firestore.collection("desktop").doc(author).collection("files").doc(el.dataset.id).update({
+       state:false
+     })
     },
     ondropdeactivate: function (event) {
       // remove active dropzone feedback
@@ -119,12 +122,12 @@ function dragMoveListener (event) {
 window.dragMoveListener = dragMoveListener
 // this is used later in the resizing and gesture demos
 
-   if(redir)
-     return <Redirect to="/folder"></Redirect>
+
+
 
 
     return (
-        <div onDoubleClick={()=>setredir(true)} id="outer-dropzone" class="dropzone draggable d-flex row justify-content-center">
+        <div onDoubleClick={(e)=>navigate(`/folder/${id}`)} id="outer-dropzone" class="dropzone draggable d-flex row justify-content-center">
            <div class="dropdown">
                                     <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-ellipsis-h"></i>

@@ -25,9 +25,11 @@ const Nav =({user})=>{
    firestore.collection("desktop").doc(user.uid).collection("files").doc(id).set({
      name:'new file',
      author:user.uid,
+     content:'',
      type:'file',
      id,
-     date:Math.round((new Date()).getTime() / 1000)
+     date:Math.round((new Date()).getTime() / 1000),
+     state:true
    })
 
  }

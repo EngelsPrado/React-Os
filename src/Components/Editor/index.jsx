@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState,useEffect } from 'react';
+
 import Froalaeditor from 'froala-editor';
 
 // Require Editor CSS files.
@@ -19,16 +19,39 @@ import 'froala-editor/js/plugins/colors.min.js'
 import 'froala-editor/js/plugins/table.min.js'
 import 'froala-editor/js/plugins/code_view.min.js'
 import 'froala-editor/js/plugins/emoticons.min.js'
+import { firestore } from '../../firebase';
 
-const Editor =()=>{
+const Editor =({id,user})=>{
   
+      const [content,setcontent]=useState('')
+     
+     const save=()=>{
+      firestore.collection("desktop").doc(user&&user.uid).collection("files").doc(id).update({
+        content:content
+      })
+     }
+      
+      useEffect(()=>{
+        
+        async function getDatos(){
+          var dato
+          if (user){
+            dato=await firestore.collection("desktop").doc(user&&user.uid).collection("files").doc(id).get()
+            console.log(dato.data()) 
+            setcontent(dato.data().content)
+         }   
+        }
+  
+       getDatos()
+      },[user])
+
      var config={
         placeholderText: 'Edit!',
         charCounterCount: true,
         autofocus: true,
          codeMirror: true,
-        // documentReady: true,
-        htmlAllowedTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+        //  documentReady: true,
+         htmlAllowedTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
         imageUpload: true,
         // colorsText: ['#61BD6D', '#1ABC9C', '#54ACD2', 'REMOVE'],
         tableCellMultipleStyles: true,
@@ -37,8 +60,8 @@ const Editor =()=>{
 
     return (
         <div id="froala-editor">
-           <FroalaEditorComponent tag='textarea' config={config}/>
-           
+           <FroalaEditorComponent model={content} onModelChange={(model=>setcontent(model))} tag='textarea' config={config}/>
+           <button onClick={save} type="button" class="btn btn-primary"><img src="https://img.icons8.com/cute-clipart/64/000000/save.png"/></button>
         </div>
 
         
