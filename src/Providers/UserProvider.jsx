@@ -1,10 +1,11 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect,useReducer } from "react";
 import { auth, createUserDocument } from "../firebase";
-
+import reducer from './../Reducer/index'
 export const UserContext = createContext({ user: null });
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [dni,dispatch]=useReducer(reducer,null)
   // const [sus, setSus] = useState(null);
   //unsubscribeFromAuth = null;
   useEffect(() => {
@@ -23,8 +24,8 @@ const UserProvider = ({ children }) => {
 
     fetch();
   }, []);
-
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  console.log(dni) 
+  return <UserContext.Provider value={[user,dni,dispatch]}>{children}</UserContext.Provider>;
 };
 
 export default UserProvider;

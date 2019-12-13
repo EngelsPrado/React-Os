@@ -1,10 +1,14 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import './style.css'
-import NewFolder from '../Util/NewFolder'
 import { firestore } from '../../firebase'
+import {UserContext} from './../../Providers/UserProvider'
 const uuidv4 = require('uuid/v4');
 
 const Nav =({user})=>{
+
+  const [,dni,dispatch] = useContext(UserContext)
+ 
+   
 
    const newFolder=()=>{
       var id=uuidv4()
@@ -34,6 +38,25 @@ const Nav =({user})=>{
 
  }
 
+ const paste=async()=>{
+ 
+    var datos=await firestore.collection("desktop").doc(user.uid).collection("files").doc(dni.ref).get()
+    var id=uuidv4()
+    console.log(datos.data())
+ 
+    firestore.collection("desktop").doc(user.uid).collection("files").doc(id).set({
+      name:datos.data().name,
+      author:datos.data().author,
+      content:datos.data().content,
+      type:'file',
+      id:id,
+      date:Math.round((new Date()).getTime() / 1000),
+      state:true
+    })
+ 
+
+ }
+
     return (
         <nav class="navbar  fixed-bottom navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Navbar</a>
@@ -46,9 +69,7 @@ const Nav =({user})=>{
       <li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
+     
       <li class="nav-item dropdown dropup ">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Dropdown
@@ -56,7 +77,7 @@ const Nav =({user})=>{
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Copiar</a>
           <a class="dropdown-item" href="#">Cortar</a>
-          <a class="dropdown-item" href="#">Pegar</a>
+          <button class="dropdown-item" onClick={paste} >Pegar</button>
           <div class="dropdown-divider"></div>
           <button onClick={newFolder} class="dropdown-item">Nueva Carpeta</button>
          

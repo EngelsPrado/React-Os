@@ -8,7 +8,8 @@ import { navigate } from "@reach/router"
 const Folder =({name,id,author})=>{
 
 
-
+  const [active,setActive]=useState(false)
+  const [txt,settxt]=useState('')
   const eliminar=(id)=>{
   
        firestore.collection("desktop").doc(author).collection("folders").doc(id).delete()
@@ -21,7 +22,7 @@ interact('.dropzone').dropzone({
     // only accept elements matching this CSS selector
     accept: '#yes-drop',
     // Require a 75% element overlap for a drop to be possible
-    overlap: 0.75,
+    overlap: 0.65,
   
     // listen for drop related events:
   
@@ -122,9 +123,22 @@ function dragMoveListener (event) {
 window.dragMoveListener = dragMoveListener
 // this is used later in the resizing and gesture demos
 
+const cambiar=(id)=>{
 
+  setActive(true)
+ 
+}
 
-
+    const Tag=!active? <span>{name}</span>:<div class="input-group input-group-sm mb-3">
+    
+    <input type="text" value={txt} onChange={(e)=>{settxt(e.target.value)}} onKeyUp={(e)=>{if(e.keyCode===13){
+        firestore.collection("desktop").doc(author).collection("folders").doc(id).update({
+          name:txt
+        })     
+        console.log('cambiando nombre a'+txt)
+        setActive(false)                  
+    }}} class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
+  </div> 
 
     return (
         <div onDoubleClick={(e)=>navigate(`/folder/${id}`)} id="outer-dropzone" class="dropzone draggable d-flex row justify-content-center">
@@ -135,13 +149,15 @@ window.dragMoveListener = dragMoveListener
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
                                         
                                         <button class="dropdown-item" onClick={()=>{eliminar(id)}}>Eliminar</button>
-                                        <button class="dropdown-item" onClick={()=>{eliminar(id)}}>Cambiar nombre</button>
+                                        <button class="dropdown-item" onClick={()=>{cambiar(id)}}>Cambiar nombre</button>
                                         
                                     </div>
                                 </div>
                 <img  src="https://img.icons8.com/cute-clipart/64/000000/folder-invoices.png"/>
-                <span>{name}</span>
-    
+               {
+                 Tag
+               }
+                
         </div>
     )
       

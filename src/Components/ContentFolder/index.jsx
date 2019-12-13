@@ -8,17 +8,19 @@ const ContentFolder=({id,user})=>{
 
 
     const [files,setfiles]=useState(null)
-
+    console.log(files)
    useEffect(()=>{
 
 
-     async function getFiles(){
+     function getFiles(){
 
        
        if (user){
-          let datos=await firestore.collection("desktop").doc(user&&user.uid).collection("folders").doc(id).get()
-          console.log(datos.data())
-          setfiles(datos.data().files)
+          firestore.collection("desktop").doc(user&&user.uid).collection("folders").doc(id).onSnapshot(datos=>{
+           
+            setfiles(datos.data().files)
+          })
+         
        }
 
      }
@@ -36,7 +38,7 @@ const ContentFolder=({id,user})=>{
         
            console.log(el) 
              return  <div className="ml-5">
-                 <File name={el.name} id={el.id} author={user.uid}></File>
+                 <File name={el.name} id={el.id} author={user.uid} folder={id}></File>
              </div>
            })
      

@@ -9,7 +9,7 @@ import {UserContext} from './Providers/UserProvider'
 import ContentFolder from './Components/ContentFolder';
 function App() {
 
- const user = useContext(UserContext)
+ const [user] = useContext(UserContext)
   
  console.log(user)
 

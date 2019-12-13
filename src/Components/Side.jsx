@@ -1,4 +1,4 @@
-import React,{useEffect,useState,Fragment} from 'react'
+import React,{useEffect,useState,Fragment,useReducer} from 'react'
 import './style.css'
 import { auth, signOut, firestore } from '../firebase'
 import Folder from './Folder&File/Folder'
@@ -8,11 +8,12 @@ import Login from './Login/Login'
 import SidebarExampleSidebar from './SideBar'
 
 
+
 const Side =({user})=>{
 
    const [folder,setFolder]=useState(null)
    const [file,setFile]=useState(null)
-  
+ 
 
    useEffect(()=>{
     
@@ -36,9 +37,9 @@ const Side =({user})=>{
       <Fragment>
        {
          user?  <div class="page-wrapper chiller-theme toggled">
-       
+         {/* <button onClick={() => dispatch({ type: 'copy',ref:'423423423' })}>dispatch</button> */}
         <SidebarExampleSidebar >
-        <main class="page-content">
+        <main class="container">
            
            {folder && folder.map(el=>{
               
@@ -47,7 +48,7 @@ const Side =({user})=>{
            {
              file && file.map(el=>{
               
-               return <File name={el.data().name} id={el.data().id } author={el.data().author}></File>
+               return <File name={el.data().name} id={el.data().id } author={el.data().author} folder=''></File>
             })
            }
         
