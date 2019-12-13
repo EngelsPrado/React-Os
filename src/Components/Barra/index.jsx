@@ -1,6 +1,6 @@
 import React,{useContext} from 'react'
 import './style.css'
-import { firestore } from '../../firebase'
+import { firestore, signOut } from '../../firebase'
 import {UserContext} from './../../Providers/UserProvider'
 import { navigate } from '@reach/router';
 const uuidv4 = require('uuid/v4');
@@ -73,7 +73,7 @@ const Nav =({user})=>{
      
       <li class="nav-item dropdown dropup ">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
+          Herramientas
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Copiar</a>
@@ -87,7 +87,7 @@ const Nav =({user})=>{
       </li>
       
     </ul>
-
+    <button onClick={signOut}><img src="https://img.icons8.com/cotton/64/000000/power-off-button.png"/></button>
   </div>
 </nav>
     )

@@ -36,6 +36,11 @@ const SidebarExampleSidebar = ({children}) => {
           <Icon name='calendar' onClick={()=>navigate('/calendar')} />
           Calendario
         </Menu.Item>
+        <Menu.Item as='a'>
+          <Icon name='file image outline' onClick={()=>navigate('/galeria')} />
+          Galeria
+        </Menu.Item>
+       
         <div >  <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=es&size=medium&timezone=America%2FManagua" width="100%" height="115" frameborder="0" seamless></iframe> </div>
       </Sidebar>
 

@@ -4,7 +4,7 @@ import "firebase/auth";
 import "firebase/storage";
 import React from 'react'
 import {Redirect} from '@reach/router'
-const uuidv4 = require('uuid/v4');
+
 
 const config = {
   apiKey: "AIzaSyA8iodjNHv3v9P6ENy9BqzL3aRywmDouwM",
