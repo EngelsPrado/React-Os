@@ -2,6 +2,7 @@ import React,{useContext} from 'react'
 import './style.css'
 import { firestore } from '../../firebase'
 import {UserContext} from './../../Providers/UserProvider'
+import { navigate } from '@reach/router';
 const uuidv4 = require('uuid/v4');
 
 const Nav =({user})=>{
@@ -59,7 +60,7 @@ const Nav =({user})=>{
 
     return (
         <nav class="navbar  fixed-bottom navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-brand" onClick={()=>navigate('/')}>Home</button>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
