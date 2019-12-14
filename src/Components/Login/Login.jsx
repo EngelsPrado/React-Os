@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import { auth } from 'firebase';
-
+import { signInWithFacebook, signInWithGoogle } from '../../firebase';
+import './style.css'
 const Login =()=>{
 
   
@@ -21,6 +22,25 @@ const Login =()=>{
 
     }
     
+    
+    const iniciarG=(e)=>{
+
+        e.preventDefault() 
+        signInWithGoogle()
+
+       
+        
+
+   }
+
+   const iniciarF=(e)=>{
+        e.preventDefault() 
+       signInWithFacebook()
+
+      
+       
+
+  }
   return (
     <div class="limiter">
     <div class="container-login100">
@@ -64,7 +84,17 @@ const Login =()=>{
                         Username / Password?
                     </a>
                 </div>
-
+                <div class="or-box">
+                    <span class="or">o</span>
+                    <div class="row">
+                        <div class="col-md-6 row-block">
+                            <button   onClick={iniciarF} class="btn btn-facebook btn-block">Facebook</button>
+                        </div>
+                        <div class="col-md-6 row-block">
+                            <button onClick={iniciarG} class="btn btn-google btn-block">Google</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="text-center p-t-136">
                     <a class="txt2" href="#">
                         Create your Account
