@@ -1,15 +1,18 @@
-import React, {useCallback, Fragment} from 'react'
+import React, {useCallback, Fragment,useContext} from 'react'
 import {useDropzone} from 'react-dropzone'
 import { storage,firestore } from '../../firebase'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import Nav from '../Barra';
+import {UserContext} from './../../Providers/UserProvider'
 const uuidv4 = require('uuid/v4');
 var urls=[]
 function MyDropzone({user}) {
 
-    const [fotos,setFotos]=useState(null)
 
+    const [,dni,dispatch] = useContext(UserContext)
+    const [fotos,setFotos]=useState(null)
+    console.log(dni)
   const onDrop = useCallback(acceptedFiles => {
     // Do something with the files
     
@@ -47,8 +50,7 @@ function MyDropzone({user}) {
         })
        
     }
-  
-
+ 
   },[user]) 
 
   return (
@@ -61,12 +63,25 @@ function MyDropzone({user}) {
           <p>Suelta las fotos aqui ...</p> :
           <p>O da click aqui</p>
       }
-       <div className="row ml-5 container">
+       
+     
+    </div>
+    <div className="row ml-5 container">
      {
 
        fotos && fotos.map(el=>{
           
-          return <div className="col-4 mt-3"> <img src={el.data().photoURL} className="img-fluid" />  </div>
+          return <div className="col-4 mt-3">
+              <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                        
+                                        <button class="dropdown-item" onClick={()=>{dispatch({type:'bg',bg:el.data().photoURL})}}>Fondo</button>
+                                      
+                                        
+                                    </div>
+             <img src={el.data().photoURL} className="img-fluid" />  </div>
 
        })
 
@@ -74,8 +89,6 @@ function MyDropzone({user}) {
 
 
    </div>
-     
-    </div>
     <Nav user={user}></Nav>
    </Fragment>
   )

@@ -5,8 +5,8 @@ const reducer = (state, action) => {
     switch (action.type) {
       case 'copy':
         return { ...state, ref: action.ref };
-      case 'decrement1':
-        return { ...state, count1: state.count1 - 1 };
+      case 'bg':
+        return { ...state, bg: action.bg};
       case 'set1':
         return { ...state, count1: action.count };
       case 'increment2':

@@ -4,8 +4,9 @@
     border: dashed 4px transparent;
     border-radius: 4px;
     touch-action: none;
-    width: 10%;
+    width: 7%;
     transition: background-color 0.3s;
+    color: whitesmoke;
   }
   
   .drop-active {
@@ -23,9 +24,9 @@
     width: 7%;
     padding: 2em 0.5em;
   
-    color: black;
+    color: whitesmoke;
    
-    border: solid 2px #fff;
+    /* border: solid 2px #fff; */
   
     touch-action: none;
     -webkit-transform: translate(0px, 0px);

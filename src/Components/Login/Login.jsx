@@ -29,8 +29,7 @@ const Login =()=>{
         signInWithGoogle()
 
        
-        
-
+    
    }
 
    const iniciarF=(e)=>{

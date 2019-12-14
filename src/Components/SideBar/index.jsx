@@ -3,14 +3,15 @@ import { Header, Icon, Button, Menu, Segment, Sidebar } from 'semantic-ui-react'
 import Calendar from '../Util/Calendar'
 import Games from '../Games'
 import { navigate } from '@reach/router'
+import './style.css'
 
 const SidebarExampleSidebar = ({children}) => {
   const [visible, setVisible] = useState(true)
   const [icon,setIcon]=useState('angle double left') 
  
   return (
-    <Sidebar.Pushable as={Segment}>
-        <Button className="mt-0 " toggle active={visible} onClick={()=>setVisible(!visible)}>
+    <Sidebar.Pushable as={Segment} >
+        <Button className="mt-0 fixed-top" toggle active={visible} onClick={()=>setVisible(!visible)}>
         <Icon  name={icon} />
       </Button>
       <Sidebar
@@ -23,6 +24,7 @@ const SidebarExampleSidebar = ({children}) => {
         vertical
         visible={visible}
         width='wide'
+        className="home-bg"
       >
         <Menu.Item as='a'>
           <Icon name='home' onClick={()=>navigate('/')}/>
@@ -44,7 +46,7 @@ const SidebarExampleSidebar = ({children}) => {
         <div >  <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=es&size=medium&timezone=America%2FManagua" width="100%" height="115" frameborder="0" seamless></iframe> </div>
       </Sidebar>
 
-      <Sidebar.Pusher>
+      <Sidebar.Pusher >
           
           {children}
           
