@@ -26,7 +26,7 @@ const ListGame=({user,id})=>{
               break;
       }
 
-    })
+    },[])
 
     return(
      

@@ -141,7 +141,7 @@ const cambiar=(id)=>{
   </div> 
 
     return (
-        <div onDoubleClick={(e)=>navigate(`/folder/${id}`)} id="outer-dropzone" class="dropzone draggable d-flex row justify-content-center">
+        <div onDoubleClick={(e)=>navigate(`/folder/${id}`)} id="outer-dropzone" class="ml-4 dropzone anifolder draggable d-flex row justify-content-center">
            <div class="dropdown">
                                     <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-ellipsis-h"></i>

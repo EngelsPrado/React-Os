@@ -13,9 +13,9 @@ const Side =({user})=>{
 
    const [folder,setFolder]=useState(null)
    const [file,setFile]=useState(null)
-   const [fondo,setFondo]=useState('https://www.logaster.com.es/blog/wp-content/uploads/sites/4/2019/01/4-min-620x350.jpg')
+   const [fondo,setFondo]=useState('')
    const [,dni,dispatch] = useContext(UserContext)
-   console.log(fondo)
+   
    useEffect(()=>{
     
    
@@ -37,14 +37,13 @@ const Side =({user})=>{
 
    useEffect(()=>{
    
-    // setFondo(dni)
-    
+    if(user){
+      firestore.collection("desktop").doc(user.uid).collection("fondo").doc(user.uid).onSnapshot(fondo=>{
+        setFondo(fondo.data().url)
+    })
+    }
 
-     if(dni){
-      console.log('nuevo')
-       setFondo(dni.bg)
-     }
-   })
+   },[user])
 
     return (
       <Fragment>

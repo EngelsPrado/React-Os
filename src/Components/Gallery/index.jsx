@@ -18,10 +18,11 @@ function MyDropzone({user}) {
     
    
     if(user){
-        const uuid=uuidv4()
+       
         console.log(acceptedFiles.length)
         for (let i = 0; i < acceptedFiles.length; i++) {
             // const element = array[index];
+            const uuid=uuidv4()
              storage.ref()
             .child("user-gallery")
             .child(user.uid)
@@ -30,7 +31,7 @@ function MyDropzone({user}) {
             .then(response => response.ref.getDownloadURL())
             .then(photoURL => {urls=[...urls,photoURL]; 
              
-             firestore.collection("desktop").doc(user.uid).collection("galeria").add({photoURL})
+             firestore.collection("desktop").doc(user.uid).collection("galeria").doc(uuid).set({photoURL,id:uuid})
            
             
            });
@@ -41,6 +42,20 @@ function MyDropzone({user}) {
     
   }, [user])
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
+  const eliminar=(id)=>{
+
+    firestore.collection("desktop").doc(user.uid).collection("galeria").doc(id).delete()
+
+  }
+
+  const fondo=(url)=>{
+ 
+    firestore.collection("desktop").doc(user.uid).collection("fondo").doc(user.uid).set({
+      url:url
+    }) 
+
+  }
 
   useEffect(()=>{
 
@@ -77,8 +92,9 @@ function MyDropzone({user}) {
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
                                         
-                                        <button class="dropdown-item" onClick={()=>{dispatch({type:'bg',bg:el.data().photoURL})}}>Fondo</button>
-                                      
+                                        <button class="dropdown-item" onClick={()=>fondo(el.data().photoURL)}>Establecer como fondo de pantalla</button>
+                                        <button class="dropdown-item" onClick={()=>eliminar(el.data().id)}>Eliminar</button>
+
                                         
                                     </div>
              <img src={el.data().photoURL} className="img-fluid" />  </div>

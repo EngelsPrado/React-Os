@@ -73,7 +73,7 @@ const File = ({name,id,author,folder})=>{
 
 
     return (
-        <div id="yes-drop" data-id={`${id&&id}`} data-name={`${name&&name}`} onDoubleClick={(e)=>navigate(`/file/${id}`)} class="drag-drop d-flex row justify-content-center">
+        <div id="yes-drop" data-id={`${id&&id}`} data-name={`${name&&name}`} onDoubleClick={(e)=>navigate(`/file/${id}`)} class="ml-4 drag-drop d-flex row justify-content-center">
             <div class="dropdown">
                                     <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-ellipsis-h"></i>

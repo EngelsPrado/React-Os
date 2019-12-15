@@ -6,7 +6,7 @@ import { navigate } from '@reach/router'
 import './style.css'
 
 const SidebarExampleSidebar = ({children}) => {
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
   const [icon,setIcon]=useState('angle double left') 
  
   return (

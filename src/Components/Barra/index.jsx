@@ -9,6 +9,7 @@ const Nav =({user})=>{
 
   const [,dni,dispatch] = useContext(UserContext)
  
+  console.log(dni)
    
 
    const newFolder=()=>{
@@ -55,12 +56,12 @@ const Nav =({user})=>{
       state:true
     })
  
-
+    dispatch({type:'copy',ref:null}) 
  }
 
     return (
         <nav class="navbar  fixed-bottom navbar-expand-lg navbar-dark bg-dark">
-  <button class="navbar-brand" onClick={()=>navigate('/')}>Home</button>
+  <button class="navbar-brand" onClick={()=>navigate('/')}><img src="https://img.icons8.com/cute-clipart/64/000000/react-native.png"/></button>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -76,9 +77,8 @@ const Nav =({user})=>{
           Herramientas
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Copiar</a>
-          <a class="dropdown-item" href="#">Cortar</a>
-          <button class="dropdown-item" onClick={paste} >Pegar</button>
+        
+          {dni&&dni.ref? <button class="dropdown-item" onClick={paste} >Pegar</button>:null}
           <div class="dropdown-divider"></div>
           <button onClick={newFolder} class="dropdown-item">Nueva Carpeta</button>
          
