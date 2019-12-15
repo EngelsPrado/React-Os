@@ -12,6 +12,7 @@ function MyDropzone({user}) {
 
     const [,dni,dispatch] = useContext(UserContext)
     const [fotos,setFotos]=useState(null)
+    const [fondo,setFondo]=useState('')
     console.log(dni)
   const onDrop = useCallback(acceptedFiles => {
     // Do something with the files
@@ -49,7 +50,7 @@ function MyDropzone({user}) {
 
   }
 
-  const fondo=(url)=>{
+  const Fondo=(url)=>{
  
     firestore.collection("desktop").doc(user.uid).collection("fondo").doc(user.uid).set({
       url:url
@@ -67,7 +68,15 @@ function MyDropzone({user}) {
     }
  
   },[user]) 
+  useEffect(()=>{
+   
+    if(user){
+      firestore.collection("desktop").doc(user.uid).collection("fondo").doc(user.uid).onSnapshot(fondo=>{
+        setFondo(fondo.data().url)
+    })
+    }
 
+   },[user])
   return (
       <Fragment>
 
@@ -81,7 +90,11 @@ function MyDropzone({user}) {
        
      
     </div>
-    <div className="row ml-5 container">
+    <div className="row "  style={{
+        backgroundImage: 'url(' + fondo + ')',
+        height:'100vh' 
+        
+      }}>
      {
 
        fotos && fotos.map(el=>{
@@ -92,7 +105,7 @@ function MyDropzone({user}) {
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
                                         
-                                        <button class="dropdown-item" onClick={()=>fondo(el.data().photoURL)}>Establecer como fondo de pantalla</button>
+                                        <button class="dropdown-item" onClick={()=>Fondo(el.data().photoURL)}>Establecer como fondo de pantalla</button>
                                         <button class="dropdown-item" onClick={()=>eliminar(el.data().id)}>Eliminar</button>
 
                                         
