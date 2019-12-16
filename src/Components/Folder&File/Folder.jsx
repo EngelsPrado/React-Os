@@ -5,24 +5,32 @@ import { firestore } from '../../firebase'
 import * as firebase from 'firebase';
 import { navigate } from "@reach/router"
 
-const Folder =({name,id,author})=>{
+const Folder =({name,id,author,to,folder})=>{
 
-
+  
   const [active,setActive]=useState(false)
   const [txt,settxt]=useState('')
   const eliminar=(id)=>{
   
        firestore.collection("desktop").doc(author).collection("folders").doc(id).delete()
+
+       if(folder){
+         console.log('eliminando folder')
+        firestore.collection("desktop").doc(author).collection("folders").doc(folder).update({
+          folders:firebase.firestore.FieldValue.arrayRemove(id)
+         })
+       }
+
   }
 
- console.log(name)
+
     
 // enable draggables to be dropped into this
 interact('.dropzone').dropzone({
     // only accept elements matching this CSS selector
     accept: '#yes-drop',
     // Require a 75% element overlap for a drop to be possible
-    overlap: 0.65,
+    overlap: 0.50,
   
     // listen for drop related events:
   
@@ -51,7 +59,7 @@ interact('.dropzone').dropzone({
     ondrop: function (event) {
     //   event.relatedTarget.textContent = 'Dropped'
      var el=document.getElementById("yes-drop")
-     console.log(el.dataset.id)
+     console.log(el)
      firestore.collection("desktop").doc(author).collection("folders").doc(id).update({
        files:firebase.firestore.FieldValue.arrayUnion({id:el.dataset.id,name:el.dataset.name})
      }) 
@@ -135,13 +143,13 @@ const cambiar=(id)=>{
         firestore.collection("desktop").doc(author).collection("folders").doc(id).update({
           name:txt
         })     
-        console.log('cambiando nombre a'+txt)
+        
         setActive(false)                  
     }}} class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
   </div> 
 
     return (
-        <div onDoubleClick={(e)=>navigate(`/folder/${id}`)} id="outer-dropzone" class="ml-4 dropzone anifolder draggable d-flex row justify-content-center">
+        <div onDoubleClick={(e)=>navigate(`/folder/${id}/${to}`)} id="outer-dropzone" class="ml-4 dropzone anifolder draggable d-flex row justify-content-center">
            <div class="dropdown">
                                     <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-ellipsis-h"></i>

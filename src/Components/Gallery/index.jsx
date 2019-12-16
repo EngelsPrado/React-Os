@@ -17,7 +17,7 @@ function MyDropzone({user}) {
   const onDrop = useCallback(acceptedFiles => {
     // Do something with the files
     
-   
+     
     if(user){
        
         console.log(acceptedFiles.length)
@@ -32,7 +32,7 @@ function MyDropzone({user}) {
             .then(response => response.ref.getDownloadURL())
             .then(photoURL => {urls=[...urls,photoURL]; 
              
-             firestore.collection("desktop").doc(user.uid).collection("galeria").doc(uuid).set({photoURL,id:uuid})
+             firestore.collection("desktop").doc(user.uid).collection("galeria").doc(uuid).set({photoURL,id:uuid,name:acceptedFiles[i].name})
            
             
            });
@@ -80,26 +80,35 @@ function MyDropzone({user}) {
   return (
       <Fragment>
 
-    <div {...getRootProps()}>
+    <div className="d-flex justify-content-around" {...getRootProps()}  style={{
+         backgroundImage: 'url(' + fondo + ')',
+        height:'10vh' 
+        
+      }}>
+        <div>
+         <h2 className="text-white">Galeria</h2> 
+        <img src="https://img.icons8.com/dusk/64/000000/gallery.png"/>
+        </div>
       <input {...getInputProps()} />
       {
         isDragActive ?
-          <p>Suelta las fotos aqui ...</p> :
-          <p>O da click aqui</p>
+        <div><img src="https://img.icons8.com/cute-clipart/64/000000/save.png"/> <h3>Sueltalas aqui</h3> </div>:
+          <img src="https://img.icons8.com/plasticine/100/000000/down-squared.png"/>
       }
        
      
     </div>
     <div className="row "  style={{
-        backgroundImage: 'url(' + fondo + ')',
-        height:'100vh' 
+         backgroundColor:'#015668',
+        height:'auto',
+         
         
       }}>
      {
 
        fotos && fotos.map(el=>{
           
-          return <div className="col-4 mt-3">
+          return <div className="col-4 mt-3 ">
               <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-ellipsis-h"></i>
                                     </button>
@@ -110,7 +119,7 @@ function MyDropzone({user}) {
 
                                         
                                     </div>
-             <img src={el.data().photoURL} className="img-fluid" />  </div>
+       <img src={el.data().photoURL} className="img-thumbnail" /> <span>{el.data().name}</span> </div>
 
        })
 

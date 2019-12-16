@@ -20,7 +20,7 @@ const Side =({user})=>{
     
    
      if (user){
-        firestore.collection("desktop").doc(user&&user.uid).collection("folders").onSnapshot(el=>{
+        firestore.collection("desktop").doc(user&&user.uid).collection("folders").where("dir",'==','parent').onSnapshot(el=>{
          setFolder(el.docs)
         
       })
@@ -50,16 +50,18 @@ const Side =({user})=>{
        {
          user?  <div class="page-wrapper chiller-theme toggled">
          {/* <button onClick={() => dispatch({ type: 'copy',ref:'423423423' })}>dispatch</button> */}
-        <SidebarExampleSidebar >
+        <SidebarExampleSidebar user={user}>
         <main class="home-bg"  style={{
         backgroundImage: 'url(' + fondo + ')',
-    
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment:'fixed',
+        backgroundSize:'cover' 
         
       }}>
            
            {folder && folder.map(el=>{
               
-              return <Folder name={el.data().name} id={el.data().id } author={el.data().author}></Folder>
+              return <Folder name={el.data().name} id={el.data().id } author={el.data().author} to=''></Folder>
            })}
            {
              file && file.map(el=>{

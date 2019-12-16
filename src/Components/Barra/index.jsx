@@ -20,6 +20,9 @@ const Nav =({user})=>{
        author:user.uid,
        type:'folder',
        id,
+       dir:'parent',
+       folders:[],
+       files:[],
        date:Math.round((new Date()).getTime() / 1000)
      })
 

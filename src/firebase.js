@@ -45,6 +45,9 @@ export const createUserDocument = async (user, additionalData) => {
     console.log(user);
     const { displayName, email, photoURL } = user;
     const createdAt = new Date();
+    firestore.collection("desktop").doc(user.uid).collection("fondo").doc(user.uid).set({
+      url:''
+    })
     try {
       await userRef.set({
         uid:user.uid,

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { Header, Icon, Button, Menu, Segment, Sidebar } from 'semantic-ui-react'
+import { Image, Icon, Button, Menu, Segment, Sidebar } from 'semantic-ui-react'
 import Calendar from '../Util/Calendar'
 import Games from '../Games'
 import { navigate } from '@reach/router'
 import './style.css'
 
-const SidebarExampleSidebar = ({children}) => {
+const SidebarExampleSidebar = ({children,user}) => {
   const [visible, setVisible] = useState(false)
   const [icon,setIcon]=useState('angle double left') 
  
@@ -26,6 +26,11 @@ const SidebarExampleSidebar = ({children}) => {
         width='wide'
         className="home-bg"
       >
+        <Menu.Item as='a'>
+        <Image src={user.photoURL} size='medium' circular />
+
+        <h3>{user.displayName}</h3>
+        </Menu.Item>
         <Menu.Item as='a'>
           <Icon name='home' onClick={()=>navigate('/')}/>
           Home

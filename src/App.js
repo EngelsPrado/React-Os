@@ -11,6 +11,7 @@ import Games from './Components/Games';
 import Calendar from './Components/Util/Calendar';
 import ListGame from './Components/Games/ListGame';
 import MyDropzone from './Components/Gallery';
+import Child from './Components/ContentFolder/Child';
 
 
 function App() {
@@ -30,7 +31,10 @@ function App() {
       <Calendar user={user} path="/calendar" ></Calendar>
       <MyDropzone user={user} path="/galeria" ></MyDropzone>
       {/* <Profile  user={user} path="/perfil/:uid" > </Profile> */}
-      <ContentFolder path="/folder/:id" user={user} ></ContentFolder>
+      <ContentFolder path="/folder/:id" user={user} >
+
+        <ContentFolder user={user} path="/:id"></ContentFolder>
+      </ContentFolder>
       </Router>
    
    {/* <Login></Login> */}

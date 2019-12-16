@@ -24,12 +24,22 @@ import { firestore } from '../../firebase';
 const Editor =({id,user})=>{
   
       const [content,setcontent]=useState('')
-     
+      const [fondo,setFondo]=useState('')
      const save=()=>{
       firestore.collection("desktop").doc(user&&user.uid).collection("files").doc(id).update({
         content:content
       })
      }
+
+     useEffect(()=>{
+   
+      if(user){
+        firestore.collection("desktop").doc(user.uid).collection("fondo").doc(user.uid).onSnapshot(fondo=>{
+          setFondo(fondo.data().url)
+      })
+      }
+  
+     },[user])
       
       useEffect(()=>{
         
@@ -59,9 +69,32 @@ const Editor =({id,user})=>{
       }
 
     return (
-        <div id="froala-editor">
-           <FroalaEditorComponent model={content} onModelChange={(model=>setcontent(model))} tag='textarea' config={config}/>
-           <button onClick={save} type="button" class="btn btn-primary"><img src="https://img.icons8.com/cute-clipart/64/000000/save.png"/></button>
+        <div id="froala-editor "   style={{
+          backgroundImage: 'url(' + fondo + ')',
+          height:'100vh',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment:'fixed',
+          backgroundSize:'cover'
+        }}>
+         
+          <div className="container"  style={{
+          
+          margin:'0 auto'
+          
+        }}>
+          <div class="dropdown">
+                                    <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                        
+                                        <button class="dropdown-item" onClick={save}>Guardar</button>
+                                
+                                        
+                                    </div>
+                                </div>
+           <FroalaEditorComponent  model={content} onModelChange={(model=>setcontent(model))} tag='textarea' config={config}/>
+          </div>
         </div>
 
         

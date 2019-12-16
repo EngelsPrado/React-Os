@@ -12,12 +12,12 @@ const File = ({name,id,author,folder})=>{
     const [txt,settxt]=useState('')
 
     const eliminar=(id)=>{
-        console.log('eliminando') 
+        
         firestore.collection("desktop").doc(author).collection("files").doc(id).delete()
 
         //Elimando en los folders
         if(folder!=''){
-            console.log(id+ '+++'+name )
+           
            firestore.collection("desktop").doc(author).collection("folders").doc(folder).update({
             files:firebase.firestore.FieldValue.arrayRemove({id:id,name:name})
            })
@@ -33,7 +33,7 @@ const File = ({name,id,author,folder})=>{
 
      //Elimando en los folders
      if(folder!=''){
-        console.log(id+ '+++'+name )
+      
        firestore.collection("desktop").doc(author).collection("folders").doc(folder).update({
         files:firebase.firestore.FieldValue.arrayRemove({id:id,name:name})
        })
@@ -56,7 +56,7 @@ const File = ({name,id,author,folder})=>{
          name:txt
        })     
        if(folder!=''){
-        console.log(id+ '+++'+name )
+      
        firestore.collection("desktop").doc(author).collection("folders").doc(folder).update({
         files:firebase.firestore.FieldValue.arrayRemove({id:id,name:name})
        })
