@@ -20,6 +20,7 @@ import 'froala-editor/js/plugins/table.min.js'
 import 'froala-editor/js/plugins/code_view.min.js'
 import 'froala-editor/js/plugins/emoticons.min.js'
 import { firestore } from '../../firebase';
+import Nav from '../Barra';
 
 const Editor =({id,user})=>{
   
@@ -76,7 +77,7 @@ const Editor =({id,user})=>{
           backgroundAttachment:'fixed',
           backgroundSize:'cover'
         }}>
-         
+          <Nav></Nav>
           <div className="container"  style={{
           
           margin:'0 auto'

@@ -12,7 +12,7 @@ const ContentFolder=({id,user,children})=>{
 
     const [files,setfiles]=useState(null)
     const [folders,setFolders]=useState(null)
-  
+    console.log(folders)
    useEffect(()=>{
 
 
@@ -22,16 +22,15 @@ const ContentFolder=({id,user,children})=>{
        if (user){
           firestore.collection("desktop").doc(user&&user.uid).collection("folders").doc(id).onSnapshot(datos=>{
            
-             setfiles(datos.data().files)
+            datos.data().files && setfiles(datos.data().files)
           
             datos.data().folders && datos.data().folders.map(dni=>{
               
-               firestore.collection("desktop").doc(user&&user.uid).collection("folders").doc(dni).onSnapshot(doc=>{
-                fet=[...fet,doc.data()]
-                setFolders(fet)
- 
-              }) 
-              
+              var fold=firestore.collection("desktop").doc(user&&user.uid).collection("folders").doc(dni).get()  
+               fold.then(doc=>{fet=[...fet,doc.data()]
+                setFolders(fet) 
+               
+              })
               fet=[]
             })
             
@@ -41,7 +40,7 @@ const ContentFolder=({id,user,children})=>{
 
      }
 
-     
+   
 
  
      getFiles()
@@ -70,7 +69,7 @@ const ContentFolder=({id,user,children})=>{
 
        {folders && folders.map(el=>{
              
-               return <Folder name={el.name} id={el.id} author={el.author} to={el.id} folder={id}></Folder>
+               return el && <Folder name={el&&el.name} id={el&&el.id} author={el.author} to={el.id} folder={id}></Folder>
            })}
      </main>
      {children}
