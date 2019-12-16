@@ -48,7 +48,7 @@ const Side =({user})=>{
     return (
       <Fragment>
        {
-         user?  <div class="page-wrapper chiller-theme toggled">
+         user?  <div class="page-wrapper chiller-theme toggled animated  pulse delay-0.1s">
          {/* <button onClick={() => dispatch({ type: 'copy',ref:'423423423' })}>dispatch</button> */}
         <SidebarExampleSidebar user={user}>
         <main class="home-bg"  style={{

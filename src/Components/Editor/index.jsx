@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, Fragment } from 'react';
 
 import Froalaeditor from 'froala-editor';
 
@@ -21,6 +21,7 @@ import 'froala-editor/js/plugins/code_view.min.js'
 import 'froala-editor/js/plugins/emoticons.min.js'
 import { firestore } from '../../firebase';
 import Nav from '../Barra';
+import Login from '../Login/Login';
 
 const Editor =({id,user})=>{
   
@@ -70,34 +71,39 @@ const Editor =({id,user})=>{
       }
 
     return (
-        <div id="froala-editor "   style={{
-          backgroundImage: 'url(' + fondo + ')',
-          height:'100vh',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment:'fixed',
-          backgroundSize:'cover'
-        }}>
-          <Nav></Nav>
-          <div className="container"  style={{
-          
-          margin:'0 auto'
-          
-        }}>
-          <div class="dropdown">
-                                    <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-h"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                                        
-                                        <button class="dropdown-item" onClick={save}>Guardar</button>
-                                
-                                        
-                                    </div>
-                                </div>
-           <FroalaEditorComponent  model={content} onModelChange={(model=>setcontent(model))} tag='textarea' config={config}/>
-          </div>
-        </div>
+       <Fragment>
+        {
+          user?
+          <div id="froala-editor "   style={{
+            backgroundImage: 'url(' + fondo + ')',
+            height:'100vh',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment:'fixed',
+            backgroundSize:'cover'
+          }}>
+            <Nav></Nav>
+            <div className="container animated  zoomIn"  style={{
+            
+            margin:'0 auto'
+            
+          }}>
+            <div class="dropdown">
+                                      <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          <i class="fa fa-ellipsis-h"></i>
+                                      </button>
+                                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                          
+                                          <button class="dropdown-item" onClick={save}>Guardar</button>
+                                  
+                                          
+                                      </div>
+                                  </div>
+             <FroalaEditorComponent  model={content} onModelChange={(model=>setcontent(model))} tag='textarea' config={config}/>
+            </div>
+          </div>:<Login></Login>
+        }
 
+       </Fragment>
         
     )
 }

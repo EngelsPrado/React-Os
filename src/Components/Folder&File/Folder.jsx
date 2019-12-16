@@ -10,6 +10,7 @@ const Folder =({name,id,author,to,folder})=>{
   
   const [active,setActive]=useState(false)
   const [txt,settxt]=useState('')
+ 
   const eliminar=(id)=>{
   
        firestore.collection("desktop").doc(author).collection("folders").doc(id).delete()

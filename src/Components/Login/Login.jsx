@@ -44,13 +44,14 @@ const Login =()=>{
     <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
-            <div class="login100-pic js-tilt" data-tilt>
-                <img src="images/img-01.png" alt="IMG"/>
+            <div class="login100-pic js-tilt animated infinite pulse delay-2s" data-tilt>
+                <img src="images/React.png" alt="IMG"/>
+                <h1>React Os</h1>
             </div>
 
             <form class="login100-form validate-form">
                 <span class="login100-form-title">
-                    Member Login
+                    Login
                 </span>
 
                 <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
@@ -95,10 +96,7 @@ const Login =()=>{
                     </div>
                 </div>
                 <div class="text-center p-t-136">
-                    <a class="txt2" href="#">
-                        Create your Account
-                        <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-                    </a>
+                   {error}
                 </div>
             </form>
         </div>

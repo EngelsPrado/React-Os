@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import Nav from '../Barra';
 import {UserContext} from './../../Providers/UserProvider'
+import Login from '../Login/Login';
 const uuidv4 = require('uuid/v4');
 var urls=[]
 function MyDropzone({user}) {
@@ -80,7 +81,9 @@ function MyDropzone({user}) {
   return (
       <Fragment>
 
-    <div className="d-flex justify-content-around" {...getRootProps()}  style={{
+       {
+         user? <Fragment>
+           <div className="d-flex justify-content-around" {...getRootProps()}  style={{
          backgroundImage: 'url(' + fondo + ')',
         height:'10vh' 
         
@@ -108,7 +111,7 @@ function MyDropzone({user}) {
 
        fotos && fotos.map(el=>{
           
-          return <div className="col-4 mt-3 ">
+          return <div className="col-4 mt-3 animated  bounceIn ">
               <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-ellipsis-h"></i>
                                     </button>
@@ -119,7 +122,7 @@ function MyDropzone({user}) {
 
                                         
                                     </div>
-       <img src={el.data().photoURL} className="img-thumbnail" /> <span>{el.data().name}</span> </div>
+       <img src={el.data().photoURL} className="img-thumbnail" /> <span class="text-white " >{el.data().name}</span> </div>
 
        })
 
@@ -128,6 +131,10 @@ function MyDropzone({user}) {
 
    </div>
     <Nav user={user}></Nav>
+         </Fragment>:<Login></Login>
+       }
+        
+
    </Fragment>
   )
 }
